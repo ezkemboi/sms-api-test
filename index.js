@@ -52,6 +52,33 @@ app.post('/questions', async (req, res) => {
   }
 })
 
+app.put('/questions/:id', async (req, res) => {
+  const { id } = req.params;
+  const { question, choices } = req.body
+  let defaults = {}
+  if(question) {
+    defaults['question'] = question
+  }
+  if(choices) {
+    defaults['choices'] = choices
+  }
+
+  try {
+    await Question.update(defaults, {
+      where: {
+        id
+      }
+    })
+    const response = await Question.findOne({ where: { id }})
+    res.status(200).send(response)
+  } catch(error) {
+    res.status(500).send({
+      error: true,
+      message: "Internal error server"
+    })
+  }
+})
+
 app.listen(port, async() => {
   console.log(`App running on port ${port}`)
   try {
