@@ -41,25 +41,15 @@ app.post('/questions', async (req, res) => {
     })
   }
 
-  res.send({
-    "question": "Favourite programming language?",
-    "published_at": "2015-08-05T08:40:51.620Z",
-    "choices": [
-      {
-        "choice": "Swift",
-        "votes": 0
-      }, {
-        "choice": "Python",
-        "votes": 0
-      }, {
-        "choice": "Objective-C",
-        "votes": 0
-      }, {
-        "choice": "Ruby",
-        "votes": 0
-      }
-    ]
-  })
+  try {
+    const response = await Question.create({ question, choices })
+    res.status(201).send(response)
+  } catch(error) {
+    res.status(500).send({
+      error: true,
+      message: "Internal error server"
+    })
+  }
 })
 
 app.listen(port, async() => {
