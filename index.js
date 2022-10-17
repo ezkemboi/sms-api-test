@@ -1,5 +1,6 @@
 const express = require("express")
 const bodyParser = require('body-parser')
+const { data } = require("./data")
 
 const app = express()
 const port = 3000
@@ -10,31 +11,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-
-const data = [
-  {
-    "question": "Favourite programming language?",
-    "published_at": "2015-08-05T08:40:51.620Z",
-    "choices": [
-      {
-        "choice": "Swift",
-        "votes": 2048
-      }, 
-      {
-        "choice": "Python",
-        "votes": 1024
-      },
-      {
-        "choice": "Objective-C",
-        "votes": 512
-      },
-      {
-        "choice": "Ruby",
-        "votes": 256
-      }
-    ]
-  }
-]
 
 app.get('/questions', (req, res) => {
   res.send(data)
