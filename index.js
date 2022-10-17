@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from 'body-parser'
 import { data } from './data.js'
+import { sequelize } from './db.js'
 
 const app = express()
 const port = 3000
@@ -54,6 +55,12 @@ app.post('/questions', async (req, res) => {
   })
 })
 
-app.listen(port, () => {
+app.listen(port, async() => {
   console.log(`App running on port ${port}`)
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
 })
