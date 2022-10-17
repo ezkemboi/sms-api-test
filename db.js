@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
 
 const Question = sequelize.define('Question', {
   question: DataTypes.STRING,
-  choices: DataTypes.ARRAY(DataTypes.STRING),
+  choices: DataTypes.JSON,
 });
 
 export {

@@ -1,7 +1,6 @@
 import express from "express"
 import bodyParser from 'body-parser'
-import { data } from './data.js'
-import { sequelize } from './db.js'
+import { sequelize, Question } from './db.js'
 
 const app = express()
 const port = 3000
@@ -13,8 +12,16 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.get('/questions', (req, res) => {
-  res.send(data)
+app.get('/questions', async (req, res) => {
+  try {
+    const questions = await Question.findAll()
+    res.status(200).send(questions)
+  } catch(error) {
+    res.status(500).send({
+      error: true,
+      message: "Internal error server"
+    })
+  }
 })
 
 app.post('/questions', async (req, res) => {
@@ -59,6 +66,7 @@ app.listen(port, async() => {
   console.log(`App running on port ${port}`)
   try {
     await sequelize.authenticate();
+    await Question.sync()
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
