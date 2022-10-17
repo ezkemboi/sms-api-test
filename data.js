@@ -1,4 +1,4 @@
- const data = [
+export const data = [
   {
     "question": "Favourite programming language?",
     "published_at": "2015-08-05T08:40:51.620Z",
@@ -22,7 +22,3 @@
     ]
   }
 ]
-
-module.exports = {
-  data
-}

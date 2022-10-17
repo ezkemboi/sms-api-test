@@ -1,6 +1,6 @@
-const express = require("express")
-const bodyParser = require('body-parser')
-const { data } = require("./data")
+import express from "express"
+import bodyParser from 'body-parser'
+import { data } from './data.js'
 
 const app = express()
 const port = 3000
